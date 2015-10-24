@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Final Four scenarios</title>
+
+		<link href="css/bootstrap.min.css" rel="stylesheet">		
+	</head>
+	<body>
+		<div class="container">
+			<div class="jumbotron">
+				<h1>Final Four scenarios</h1>
+				<p class="lead">This demonstration page provides an interactive tool for presenting possible scenarios in the UAAP Season 77 men's basketball tournament for the five remaining teams in the hunt for Final Four slots.</p>
+				<small><strong class="text-uppercase">HOW TO USE:</strong> Click buttons in the <strong>Games Remaining</strong> section to update the teams win-loss records and play out scenarios.</small>
+	  		</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<h2>Win-Loss records</h2>
+					<table class="table table-striped" id="winLoss-table">
+						<thead>
+							<tr>
+								<th>&nbsp;</th>
+								<th>Win</th>
+								<th>Loss</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+					</table>
+					<div>
+						<button class="btn btn-default" id="reset">Start Over</button>
+					</div>
+
+					<h2>Outcomes</h2>
+					<ul>
+						<li class="hidden" id="outcome-firstplace_ADMU">ADMU finishes #1 with twice-to-beat advantage.</li>
+						<li class="hidden" id="outcome-firstplace_FEU">FEU finishes #1 with twice-to-beat advantage.</li>
+						<li class="hidden" id="outcome-firstplacetie_FEU">FEU finishes #1 after sweeping season series with DLSU</li>
+						<li class="hidden" id="outcome-firstplacetie_ADMU">ADMU finishes #1 because of superior quotient</li>
+						<li class="hidden" id="outcome-secondplacetie1">Playoff between <span id="secondplacetie1-team1"></span> and <span id="secondplacetie1-team2"></span> for #2 and twice-to-beat advantage</li>
+						<li class="hidden" id="outcome-secondplacetie2_FEU">Playoff between ADMU and NU for #2 and twice-to-beat advantage; DLSU slips to #4 because of inferior quotient.</li>
+						<li class="hidden" id="outcome-secondplacetie2_ADMU">NU must win by five points or more against DLSU to force a playoff against FEU for #2, which has the superior quotient among the three teams. Otherwise, FEU and DLSU will play for #2 and the twice-to-beat advantage.</li>
+						<li class="hidden" id="outcome-lastplacetie">Playoff between <span id="lastplacetie-team1"></span> and <span id="lastplacetie-team2"></span> to determine who goes into Final Four</li>
+						<li class="hidden" id="outcome-lastplace_NU">NU is eliminated from the Final Four.</li>
+						<li class="hidden" id="outcome-lastplace_UE">UE is eliminated from the Final Four.</li>
+					</ul>
+				</div>
+				<div class="col-sm-6" id="scenarios-list">
+					<h2>Games Remaining</h2>
+
+					<h3>Wednesday, September 10</h3>
+					<div>
+						<h4>DLSU vs. UE</h4>
+						<div id="sept10game1">
+							<button type="button" class="btn btn-default" id="sept10game1-DLSU_UE">DLSU wins</button>
+							<button type="button" class="btn btn-default" id="sept10game1-UE_DLSU">UE wins</button>
+						</div>
+					</div>
+					<div>
+						<h4>NU vs. UST</h4>
+						<div id="sept10game2">
+							<button type="button" class="btn btn-default" id="sept10game2-NU_UST">NU wins</button>
+							<button type="button" class="btn btn-default" id="sept10game2-UST_NU">UST wins</button>
+						</div>
+					</div>
+
+					<h3>Saturday, September 13</h3>
+					<div>
+						<h4>ADMU vs. FEU</h4>
+						<div id="sept13game1">
+							<button type="button" class="btn btn-default" id="sept13game1-ADMU_FEU">ADMU wins</button>
+							<button type="button" class="btn btn-default" id="sept13game1-FEU_ADMU">FEU wins</button>
+						</div>
+					</div>
+					<div>
+						<h4>DLSU vs. NU</h4>
+						<div  id="sept13game2">
+							<button type="button" class="btn btn-default" id="sept13game2-DLSU_NU">DLSU wins</button>
+							<button type="button" class="btn btn-default" id="sept13game2-NU_DLSU">NU wins</button>
+						</div>
+					</div>
+
+					<h3>TUEsday, September 16</h3>
+					<div>
+						<h4>UE vs. UST</h4>
+						<div id="sept16game1">
+							<button type="button" class="btn btn-default" id="sept16game1-UE_UST">UE wins</button>
+							<button type="button" class="btn btn-default" id="sept16game1-UST_UE">UST wins</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer>&nbsp;</footer>
+
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+		<script type="text/javascript" src="js/loader.js"></script>
+		<script type="text/javascript" src="js/teamdata.js"></script>
+		<script type="text/javascript" src="js/util.js"></script>
+
+		<!--
+			This page was inspired by the scenarios described on http://www.spin.ph/basketball/news/uaap-season-77-final-four-scenarios-feu-ateneo-dlsu-nu-ue by Reuben Terrado.
+
+			Content on this page produced by Jose Paolo Lacdao, with the exclusion of third-party libraries, whose copyrights are held by their respective owners. All rights reserved.
+		-->
+	</body>
+</html>
