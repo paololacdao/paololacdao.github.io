@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Cards demo">
+		<meta name="author" content="Paolo Lacdao">
+		<title>Task Board</title>
+		<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="styles/cards.css">
+		<script src="lib/jquery.js"></script>
+		<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+	</head>
+	<body ng-app="taskboard" ng-controller="TaskboardController">
+		<!-- Start: How To Modal -->
+		<div class="modal fade" id="aboutAppModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+						<span class="h3">How to use this application</span>
+					</div>
+					<div class="modal-body">
+						<p>
+							<span class="text-primary">Task Board</span> is a task list application with simple status 
+							tracking. Listed tasks can be grouped into three categories based on status (Backlog, To Do, Done).
+						</p>
+						<p>
+							The <strong>Add Card</strong> button at the top right adds tasks into the list. You can type in
+							a title to replace the default text provided. New tasks are created into the Backlog.
+						</p>
+						<p>
+							<strong>Task editing.&nbsp;</strong>You can modify tasks in the following ways:
+							<ol>
+								<li>Change its title.</li>
+								<li>Change its background color.</li>
+								<li>Drag it to the <strong>To Do</strong> or <strong>Done</strong> columns.</li>
+								<li>Delete the task.</li>
+							</ol>
+						</p>
+						<p>
+							The <strong>Clear All</strong> button provides a mechanism for clearing the board of all tasks.
+							You will be asked to confirm when attempting to delete all tasks in the list.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End: How To Modal -->
+		<!-- Start: Page content -->
+		<div class="container">
+			<header>
+				<ul class="nav nav-pills pull-right">
+					<li class="btn btn-md btn-primary" ng-click="addCard()">Add Card</li>
+					<li class="btn btn-md btn-danger" data-toggle="modal" data-target="#confirmDeleteAllModal">Clear All Cards</li>
+					<li class="btn btn-md btn-default" data-toggle="modal" data-target="#aboutAppModal">How To</li>
+				</ul>
+				<h2 class="text-primary">Task Board</h2>
+			</header>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="col-content">
+						<h4>Backlog</h4>
+						<div class="card-contents">
+							<div ng-repeat="x in cards | filter: {status : 'backlog'} track by $index" class="card {{x.bgColorClass}}" card-directive>
+								<label for="title" class="control-label">{{x.title}}</label>
+								<div class="controls pull-right">
+									<button class="btn btn-default btn-xs edit-card"  data-toggle="collapse" data-target="#backlog-collapse-{{$index}}">Edit</button>
+									<button class="btn btn-danger btn-xs delete-card" ng-click="deleteCard($index,'backlog')">Delete</button>
+								</div>
+								<div class="collapse" id="backlog-collapse-{{$index}}">
+									<form id="backlog-form-{{$index}}">
+										<div class="form-group">
+											<label for="card-title-backlog-{{$index}}">Title</label>
+											<input type="text" class="form-control" id="card-title-backlog-{{$index}}" value="{{x.title}}" />
+										</div>
+										<div class="form-group">
+											<label for="card-bg-selector-backlog-{{$index}}">Background color</label>
+											<select class="form-control" id="card-bg-selector-backlog-{{$index}}">
+												<option value="" >White</option>
+												<option value="bg-primary">Blue</option>
+												<option value="bg-warning">Yellow</option>
+												<option value="bg-danger">Red</option>
+												<option value="bg-success">Green</option>
+											</select>
+										</div>
+										<button type="submit" class="btn btn-default btn-update-backlog" id="update-backlog-{{$index}}" ng-click="updateCard($index,'backlog')">Update</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="col-content">
+						<h4>In Progress</h4>
+						<div class="card-contents">
+							<div class="card {{x.bgColorClass}}" ng-repeat="x in cards | filter:{ status: 'inProgress'} track by $index" card-directive>
+								<label for="title" class="control-label">{{x.title}}</label>
+								<div class="controls pull-right">
+									<button class="btn btn-default btn-xs edit-card" data-toggle="collapse" data-target="#in-progress-collapse-{{$index}}">Edit</button>
+									<button class="btn btn-danger btn-xs delete-card" ng-click="deleteCard($index,'inProgress')">Delete</button>
+								</div>
+								<div class="collapse" id="in-progress-collapse-{{$index}}">
+									<form>
+										<div class="form-group">
+											<label for="card-title-in-progress-{{$index}}">Title</label>
+											<input type="text" class="form-control" id="card-title-in-progress-{{$index}}" value="{{x.title}}" />
+										</div>
+										<div class="form-group">
+											<label for="card-bg-selector-in-progress-{{$index}}">Background color</label>
+											<select class="form-control" id="card-bg-selector-in-progress-{{$index}}">
+												<option value="">White</option>
+												<option value="bg-primary">Blue</option>
+												<option value="bg-warning">Yellow</option>
+												<option value="bg-danger">Red</option>
+												<option value="bg-success">Green</option>
+											</select>
+										</div>
+										<button type="submit" class="btn btn-default btn-update-in-progress" id="update-in-progress-{{$index}}" ng-click="updateCard($index,'inProgress')">Update</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="col-content">
+						<h4>Done</h4>
+						<div class="card-contents">
+							<div class="card {{x.bgColorClass}}" ng-repeat="x in cards | filter:{ status: 'done'} track by $index" card-directive>
+								<label for="title" class="control-label">{{x.title}}</label>
+								<div class="controls pull-right">
+									<button class="btn btn-default btn-xs edit-card" data-toggle="collapse" data-target="#done-collapse-{{$index}}">Edit</button>
+									<button class="btn btn-danger btn-xs delete-card" ng-click="deleteCard($index,'done')">Delete</button>
+								</div>
+								<div class="collapse" id="done-collapse-{{$index}}">
+									<form>
+										<div class="form-group">
+											<label for="card-title-done-{{$index}}">Title</label>
+											<input type="text" class="form-control" id="card-title-done-{{$index}}" value="{{x.title}}" />
+										</div>
+										<div class="form-group">
+											<label for="card-bg-selector-done-{{$index}}">Background color</label>
+											<select class="form-control" id="card-bg-selector-done-{{$index}}">
+												<option value="">White</option>
+												<option value="bg-primary">Blue</option>
+												<option value="bg-warning">Yellow</option>
+												<option value="bg-danger">Red</option>
+												<option value="bg-success">Green</option>
+											</select>
+										</div>
+										<button type="submit" class="btn btn-default btn-update-in-progress" id="update-done-{{$index}}" ng-click="updateCard($index,'done')">Update</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+		<!-- End: Page content -->
+		<!-- Start: Modals -->
+		<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<span class="h4">Confirm Delete</span>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure you want to delete this card?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+						<button type="button" class="btn btn-danger">Yes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="confirmDeleteAllModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<span class="h4">Confirm Delete</span>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure you want to delete all cards?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+						<button type="button" class="btn btn-danger" ng-click="deleteAllCards()">Yes</button>
+				</div>
+			</div>
+		</div>
+		<!-- End: Modals -->
+		<script src="lib/angular.min.js"></script>
+		<script src="lib/lodash.min.js"></script>
+		<script src="scripts/taskboard.js"></script>
+	<body>
+</html>
