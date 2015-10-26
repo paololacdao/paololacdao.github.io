@@ -2,6 +2,12 @@
   padding: 5px;
 }
 
+.row {
+	border: 1px solid #ccc;
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
 .col-content {
   border: 1px solid #ddd;
   border: 1px solid rgba(86,61,124,.2);
@@ -17,10 +23,12 @@ div.container div.card-contents {
 	display: none;
 }
 
-div.container div.card-contents div.card {
+div.container div.card-contents div.card,
+#trash .card {
 	padding: 5px 10px;
 	border: 1px solid #eee;
-	margin: 3px 0;
+	margin: 5px 0;
+	clear: both;
 }
 
 div.container div.card-contents .controls {
@@ -30,4 +38,8 @@ div.container div.card-contents .controls {
 
 div.container div.card-contents .edit-input {
 	display: none;
+}
+
+#trash {
+	padding-top: 5px;
 }
