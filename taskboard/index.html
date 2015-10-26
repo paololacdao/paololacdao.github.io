@@ -61,15 +61,15 @@
 				<h2 class="text-primary">Task Board</h2>
 				<ul class="nav nav-pills">
 					<li class="btn btn-md btn-primary" ng-click="addCard()">Add Card</li>
-					<li class="btn btn-md btn-danger {{(cards | filter: { status : nonTrashStatus} : containsComparator) == 0 ? 'disabled' : ''}}" data-toggle="{{(cards | filter: { status : nonTrashStatus} : containsComparator) == 0 ? '' : 'modal'}}" data-target="#confirmDeleteAllModal">Clear All Cards</li>
+					<li class="btn btn-md btn-danger {{cards.backlog.length === 0 && cards.inProgress.length === 0 && cards.done.length === 0 ? 'disabled' : ''}}" data-toggle="{{cards.backlog.length === 0 && cards.inProgress.length === 0 && cards.done.length === 0 ? '' : 'modal'}}" data-target="#confirmDeleteAllModal">Clear All Cards</li>
 					<li class="btn btn-md btn-default" data-toggle="modal" data-target="#aboutAppModal">How To</li>
 				</ul>
 			</header>
 			<div class="row">
 				<div class="col-sm-4">
 					<h4>Backlog</h4>
-					<div class="card-contents">
-						<div ng-repeat="x in cards | filter: {status : 'backlog'} track by $index" class="card {{getBgColorClass(x.background)}}" card-directive>
+					<div class="card-contents" dnd-list="cards">
+						<div ng-repeat="x in cards.backlog track by $index" class="card {{getBgColorClass(x.background)}}" card-directive dnd-draggable="x" dnd-moved="_testHandler($index, x.status)">
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs edit-card"  data-toggle="collapse" data-target="#backlog-collapse-{{$index}}">Edit</button>
@@ -99,8 +99,8 @@
 				</div>
 				<div class="col-sm-4">
 					<h4>In Progress</h4>
-					<div class="card-contents">
-						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards | filter:{ status: 'inProgress'} track by $index" card-directive>
+					<div class="card-contents" dnd-list="cards">
+						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards.inProgress track by $index" card-directive dnd-draggable="x" dnd-moved="_testHandler($index, x.status)"s>
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs edit-card" data-toggle="collapse" data-target="#in-progress-collapse-{{$index}}">Edit</button>
@@ -110,11 +110,11 @@
 								<form>
 									<div class="form-group">
 										<label for="card-title-in-progress-{{$index}}">Title</label>
-										<input type="text" class="form-control" id="card-title-in-progress-{{$index}}" value="{{x.title}}" />
+										<input type="text" class="form-control" id="card-title-inProgress-{{$index}}" value="{{x.title}}" />
 									</div>
 									<div class="form-group">
-										<label for="card-bg-selector-in-progress-{{$index}}">Background color</label>
-										<select class="form-control" id="card-bg-selector-in-progress-{{$index}}">
+										<label for="card-bg-selector-inProgress-{{$index}}">Background color</label>
+										<select class="form-control" id="card-bg-selector-inProgress-{{$index}}">
 											<option value="white" ng-selected="x.background == ''">White</option>
 											<option value="blue" ng-selected="x.background == 'blue'">Blue</option>
 											<option value="yellow" ng-selected="x.background == 'yellow'">Yellow</option>
@@ -122,7 +122,7 @@
 											<option value="green" ng-selected="x.background == 'green'">Green</option>
 										</select>
 									</div>
-									<button type="submit" class="btn btn-default btn-update-in-progress" id="update-in-progress-{{$index}}" ng-click="updateCard($index,'inProgress')">Update</button>
+									<button type="submit" class="btn btn-default btn-update-inProgress" id="update-inProgress-{{$index}}" ng-click="updateCard($index,'inProgress')">Update</button>
 								</form>
 							</div>
 						</div>
@@ -131,7 +131,7 @@
 				<div class="col-sm-4">
 					<h4>Done</h4>
 					<div class="card-contents">
-						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards | filter:{ status: 'done'} track by $index" card-directive>
+						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards.done track by $index" card-directive>
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs edit-card" data-toggle="collapse" data-target="#done-collapse-{{$index}}">Edit</button>
@@ -162,9 +162,9 @@
 			</div>
 			<footer>
 				<div class="col-sm-4 nav">
-					<button class="btn btn-warning {{(cards | filter:{ status: 'trashed'}) == 0 ? 'disabled' : ''}}" data-toggle="{{(cards | filter:{ status: 'trashed'}) == 0 ? '' : 'collapse'}}" data-target="#trash">Trash</button>
+					<button class="btn btn-warning {{cards.trashed.length == 0 ? 'disabled' : ''}}" data-toggle="{{cards.trashed.length == 0 ? '' : 'collapse'}}" data-target="#trash">Trash</button>
 					<div id="trash" class="collapse">
-						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards | filter:{ status: 'trashed'} track by $index" trash-directive>
+						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards.trashed track by $index" trash-directive>
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs restore-card"  ng-click="restoreCard($index)">Restore</button>
@@ -211,6 +211,7 @@
 		</div>
 		<!-- End: Modals -->
 		<script src="lib/angular.min.js"></script>
+		<script src="lib/angular-drag-and-drop-lists.min.js"></script>
 		<script src="scripts/taskboard.js"></script>
 	<body>
 </html>

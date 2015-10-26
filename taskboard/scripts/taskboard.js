@@ -1,8 +1,13 @@
 (function () {
-	var app = angular.module("taskboard", []);
+	var app = angular.module("taskboard", ["dndLists"]);
 	
 	app.controller("TaskboardController", function ($scope) {
-		$scope.cards = [];
+		$scope.cards = {
+			backlog : [],
+			inProgress : [],
+			done : [],
+			trashed : []
+		};
 		
 		if (typeof(Storage) !== "undefined") {
 			if (localStorage && localStorage.getItem("cards")) {
@@ -13,7 +18,6 @@
 		function card (){
 			this.title = "Story #1";
 			this.background = "white";
-			this.status = "backlog";
 		}
 		
 		$scope.nonTrashStatus = "backlog, inProgress, done";
@@ -42,39 +46,28 @@
 
 		$scope.addCard = function () {
 			newCard = new card();
-			$scope.cards.push(newCard);
+			$scope.cards.backlog.push(newCard);
 			$scope._updateLocalStorage();
 		};
 		
 		$scope.updateCard = function (index, cardType) {
-			var realIndex = $scope.getRealIndex(index, cardType);
-					
-			$scope.cards[realIndex].title = $("#card-title-" + cardType + "-" + index).val();
-			$scope.cards[realIndex].background = $("#card-bg-selector-" + cardType + "-" + index).val();
+			$scope.cards[cardType][index].title = $("#card-title-" + cardType + "-" + index).val();
+			$scope.cards[cardType][index].background = $("#card-bg-selector-" + cardType + "-" + index).val();
 			
 			$scope._updateLocalStorage();
 		};
 		
 		$scope.deleteCard = function (index, cardType) {
-			var realIndex = $scope.getRealIndex(index, cardType);
-			$scope.cards[realIndex].status = "trashed";
+			$scope.cards.trashed.push($scope.cards[cardType][index]);
+			$scope.cards[cardType].splice(index,1);
 			
 			$scope._updateLocalStorage();
 		};
 		
 		$scope.purgeCard = function (index) {
-			var realIndex = $scope.getRealIndex(index),
-					counter = 0;
-					
-			$scope.cards.splice(realIndex,1);
+			$scope.cards.trashed.splice(index,1);
 			
-			for (i=0; i < $scope.cards.length; i++) {
-				if ($scope.cards[i].status == "trashed") {
-					counter++;
-				}
-			}
-			
-			if (!counter) {
+			if ($scope.cards.trashed.length === 0) {
 				$("#trash").collapse("hide");
 			}
 			
@@ -114,16 +107,29 @@
 		};
 		
 		$scope.deleteAllCards = function () {
-			angular.forEach($scope.cards, function (item){
-				item.status = "trashed";
-			})
+			angular.forEach($scope.cards.backlog, function (item){
+				$scope.cards.trashed.push(item);
+			});
+			
+			angular.forEach($scope.cards.inProgress, function (item){
+				$scope.cards.trashed.push(item);
+			});
+			
+			angular.forEach($scope.cards.done, function (item){
+				$scope.cards.trashed.push(item);
+			});
+			
+			$scope.cards.backlog = [];
+			$scope.cards.inProgress = [];
+			$scope.cards.done = [];
 			
 			$scope._updateLocalStorage();
 			$("#confirmDeleteAllModal").modal("hide");
 		};
 		
 		$scope.emptyTrash = function () {
-			$scope.cards = [];
+			$scope.cards.trashed = [];
+			
 			$scope._updateLocalStorage();
 			$("#trash").collapse("hide");
 		};
@@ -132,6 +138,15 @@
 			if (typeof(Storage) !== "undefined") {
 				localStorage.setItem("cards",JSON.stringify($scope.cards));
 			}
+		};
+		
+		$scope._testHandler = function (index, type) {
+			index++;
+			var realIndex = $scope.getRealIndex(index, type);
+			
+			$scope.cards.splice(realIndex,1);
+			
+			$scope._updateLocalStorage();
 		}
 	});
 	

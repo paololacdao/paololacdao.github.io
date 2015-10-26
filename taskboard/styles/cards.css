@@ -21,6 +21,7 @@ div.container h4 {
 
 div.container div.card-contents {
 	display: none;
+	min-height: 40px;
 }
 
 div.container div.card-contents div.card,
