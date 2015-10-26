@@ -29,7 +29,7 @@
 							tracking. Listed tasks can be grouped into three categories based on status (Backlog, To Do, Done).
 						</p>
 						<p>
-							The <strong>Add Card</strong> button at the top right adds tasks into the list. You can type in
+							The <strong>Add Card</strong> button adds tasks into the list. You can type in
 							a title to replace the default text provided. New tasks are created into the Backlog.
 						</p>
 						<p>
@@ -38,12 +38,17 @@
 								<li>Change its title.</li>
 								<li>Change its background color.</li>
 								<li>Drag it to the <strong>To Do</strong> or <strong>Done</strong> columns.</li>
-								<li>Delete the task.</li>
+								<li>Put the task to the trash container.</li>
 							</ol>
 						</p>
 						<p>
-							The <strong>Clear All</strong> button provides a mechanism for clearing the board of all tasks.
-							You will be asked to confirm when attempting to delete all tasks in the list.
+							The <strong>Clear All</strong> button provides a mechanism for moving all tasks to the trash 
+							container. You will be asked to confirm this operation.
+						</p>
+						<p>
+							The <strong>Trash</strong> button provides access to any trashed items. You can restore or
+							permanently delete individual items, as well as purge the trash container to remove all items
+							inside.
 						</p>
 					</div>
 				</div>
@@ -64,7 +69,7 @@
 				<div class="col-sm-4">
 					<h4>Backlog</h4>
 					<div class="card-contents">
-						<div ng-repeat="x in cards | filter: {status : 'backlog'} track by $index" class="card" card-directive>
+						<div ng-repeat="x in cards | filter: {status : 'backlog'} track by $index" class="card {{getBgColorClass(x.background)}}" card-directive>
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs edit-card"  data-toggle="collapse" data-target="#backlog-collapse-{{$index}}">Edit</button>
@@ -79,11 +84,11 @@
 									<div class="form-group">
 										<label for="card-bg-selector-backlog-{{$index}}">Background color</label>
 										<select class="form-control" id="card-bg-selector-backlog-{{$index}}">
-											<option value="white">White</option>
-											<option value="blue">Blue</option>
-											<option value="yellow">Yellow</option>
-											<option value="red">Red</option>
-											<option value="bg-success">Green</option>
+											<option value="white" ng-selected="x.background == ''">White</option>
+											<option value="blue" ng-selected="x.background == 'blue'">Blue</option>
+											<option value="yellow" ng-selected="x.background == 'yellow'">Yellow</option>
+											<option value="red" ng-selected="x.background == 'red'">Red</option>
+											<option value="green" ng-selected="x.background == 'green'">Green</option>
 										</select>
 									</div>
 									<button type="submit" class="btn btn-default btn-update-backlog" id="update-backlog-{{$index}}" ng-click="updateCard($index,'backlog')">Update</button>
@@ -95,7 +100,7 @@
 				<div class="col-sm-4">
 					<h4>In Progress</h4>
 					<div class="card-contents">
-						<div class="card" ng-repeat="x in cards | filter:{ status: 'inProgress'} track by $index" card-directive>
+						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards | filter:{ status: 'inProgress'} track by $index" card-directive>
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs edit-card" data-toggle="collapse" data-target="#in-progress-collapse-{{$index}}">Edit</button>
@@ -110,11 +115,11 @@
 									<div class="form-group">
 										<label for="card-bg-selector-in-progress-{{$index}}">Background color</label>
 										<select class="form-control" id="card-bg-selector-in-progress-{{$index}}">
-											<option value="">White</option>
-											<option value="bg-primary">Blue</option>
-											<option value="bg-warning">Yellow</option>
-											<option value="bg-danger">Red</option>
-											<option value="bg-success">Green</option>
+											<option value="white" ng-selected="x.background == ''">White</option>
+											<option value="blue" ng-selected="x.background == 'blue'">Blue</option>
+											<option value="yellow" ng-selected="x.background == 'yellow'">Yellow</option>
+											<option value="red" ng-selected="x.background == 'red'">Red</option>
+											<option value="green" ng-selected="x.background == 'green'">Green</option>
 										</select>
 									</div>
 									<button type="submit" class="btn btn-default btn-update-in-progress" id="update-in-progress-{{$index}}" ng-click="updateCard($index,'inProgress')">Update</button>
@@ -126,7 +131,7 @@
 				<div class="col-sm-4">
 					<h4>Done</h4>
 					<div class="card-contents">
-						<div class="card" ng-repeat="x in cards | filter:{ status: 'done'} track by $index" card-directive>
+						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards | filter:{ status: 'done'} track by $index" card-directive>
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs edit-card" data-toggle="collapse" data-target="#done-collapse-{{$index}}">Edit</button>
@@ -141,11 +146,11 @@
 									<div class="form-group">
 										<label for="card-bg-selector-done-{{$index}}">Background color</label>
 										<select class="form-control" id="card-bg-selector-done-{{$index}}">
-											<option value="">White</option>
-											<option value="bg-primary">Blue</option>
-											<option value="bg-warning">Yellow</option>
-											<option value="bg-danger">Red</option>
-											<option value="bg-success">Green</option>
+											<option value="white" ng-selected="x.background == ''">White</option>
+											<option value="blue" ng-selected="x.background == 'blue'">Blue</option>
+											<option value="yellow" ng-selected="x.background == 'yellow'">Yellow</option>
+											<option value="red" ng-selected="x.background == 'red'">Red</option>
+											<option value="green" ng-selected="x.background == 'green'">Green</option>
 										</select>
 									</div>
 									<button type="submit" class="btn btn-default btn-update-in-progress" id="update-done-{{$index}}" ng-click="updateCard($index,'done')">Update</button>
@@ -159,7 +164,7 @@
 				<div class="col-sm-4 nav">
 					<button class="btn btn-warning {{(cards | filter:{ status: 'trashed'}) == 0 ? 'disabled' : ''}}" data-toggle="{{(cards | filter:{ status: 'trashed'}) == 0 ? '' : 'collapse'}}" data-target="#trash">Trash</button>
 					<div id="trash" class="collapse">
-						<div class="card {{x.background}}" ng-repeat="x in cards | filter:{ status: 'trashed'} track by $index" trash-directive>
+						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards | filter:{ status: 'trashed'} track by $index" trash-directive>
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs restore-card"  ng-click="restoreCard($index)">Restore</button>

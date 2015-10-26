@@ -20,6 +20,25 @@
 		$scope.containsComparator = function(expected, actual){  
 		  return actual.indexOf(expected) > -1;
 		};
+		
+		$scope.getBgColorClass = function (color) {
+			switch (color) {
+				case 'blue' : 
+					return 'bg-primary';
+					break;
+				case 'red' :
+					return 'bg-danger';
+					break;
+				case 'green' : 
+					return 'bg-success';
+					break;
+				case 'yellow' :
+					return 'bg-warning';
+					break;
+				default :
+					return '';
+			}
+		}
 
 		$scope.addCard = function () {
 			$scope.cards.push($scope.newCard);
