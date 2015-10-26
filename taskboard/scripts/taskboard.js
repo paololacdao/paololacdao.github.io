@@ -15,6 +15,11 @@
 			background : "white",
 			status : "backlog"
 		};
+		
+		$scope.nonTrashStatus = "backlog, inProgress, done";
+		$scope.containsComparator = function(expected, actual){  
+		  return actual.indexOf(expected) > -1;
+		};
 
 		$scope.addCard = function () {
 			$scope.cards.push($scope.newCard);

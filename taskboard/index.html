@@ -56,7 +56,7 @@
 				<h2 class="text-primary">Task Board</h2>
 				<ul class="nav nav-pills">
 					<li class="btn btn-md btn-primary" ng-click="addCard()">Add Card</li>
-					<li class="btn btn-md btn-danger" data-toggle="modal" data-target="#confirmDeleteAllModal">Clear All Cards</li>
+					<li class="btn btn-md btn-danger {{(cards | filter: { status : nonTrashStatus} : containsComparator) == 0 ? 'disabled' : ''}}" data-toggle="{{(cards | filter: { status : nonTrashStatus} : containsComparator) == 0 ? '' : 'modal'}}" data-target="#confirmDeleteAllModal">Clear All Cards</li>
 					<li class="btn btn-md btn-default" data-toggle="modal" data-target="#aboutAppModal">How To</li>
 				</ul>
 			</header>
@@ -157,9 +157,9 @@
 			</div>
 			<footer>
 				<div class="col-sm-4 nav">
-					<button class="btn btn-warning" data-toggle="collapse" data-target="#trash">Trash</button>
+					<button class="btn btn-warning {{(cards | filter:{ status: 'trashed'}) == 0 ? 'disabled' : ''}}" data-toggle="{{(cards | filter:{ status: 'trashed'}) == 0 ? '' : 'collapse'}}" data-target="#trash">Trash</button>
 					<div id="trash" class="collapse">
-						<div class="card {{x.background}}" ng-repeat="x in cards | filter:{ status: 'trashed'} track by $index" card-directive>
+						<div class="card {{x.background}}" ng-repeat="x in cards | filter:{ status: 'trashed'} track by $index" trash-directive>
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs restore-card"  ng-click="restoreCard($index)">Restore</button>
