@@ -9,12 +9,12 @@
 				$scope.cards = JSON.parse(localStorage.getItem("cards"));
 			}
 		}
-		
-		$scope.newCard = {
-			title : "Story #1",
-			background : "white",
-			status : "backlog"
-		};
+			
+		function card (){
+			this.title = "Story #1";
+			this.background = "white";
+			this.status = "backlog";
+		}
 		
 		$scope.nonTrashStatus = "backlog, inProgress, done";
 		$scope.containsComparator = function(expected, actual){  
@@ -41,7 +41,8 @@
 		}
 
 		$scope.addCard = function () {
-			$scope.cards.push($scope.newCard);
+			newCard = new card();
+			$scope.cards.push(newCard);
 			$scope._updateLocalStorage();
 		};
 		
