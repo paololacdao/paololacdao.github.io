@@ -75,18 +75,10 @@
 		};
 		
 		$scope.restoreCard = function (index) {
-			var realIndex = $scope.getRealIndex(index, "trashed"),
-					counter = 0;
+			$scope.cards.backlog.push($scope.cards.trashed[index]);
+			$scope.cards.trashed.splice(index,1);
 			
-			$scope.cards[realIndex].status = "backlog";
-			
-			for (i=0; i < $scope.cards.length; i++) {
-				if ($scope.cards[i].status == "trashed") {
-					counter++;
-				}
-			}
-			
-			if (!counter) {
+			if ($scope.cards.trashed.length == 0) {
 				$("#trash").collapse("hide");
 			}
 			
@@ -140,14 +132,21 @@
 			}
 		};
 		
-		$scope._testHandler = function (index, type) {
-			index++;
-			var realIndex = $scope.getRealIndex(index, type);
-			
-			$scope.cards.splice(realIndex,1);
-			
-			$scope._updateLocalStorage();
-		}
+		$scope.preDrag = function (index, type) {
+			$scope.cards[type].splice(index,1);
+		};
+		
+		$scope.postDrag = function () {
+			var localStorageCopy = JSON.parse(localStorage.cards),
+					localCopyTotal = localStorageCopy.backlog.length + localStorageCopy.inProgress.length + localStorageCopy.done.length,
+					scopeTotal = $scope.cards.backlog.length + $scope.cards.inProgress.length + $scope.cards.done.length;
+	
+			if (localCopyTotal != scopeTotal) {
+				$scope.cards = localStorageCopy;
+			} else {
+				$scope._updateLocalStorage();
+			}
+		};
 	});
 	
 	/*** Event handlers ***/

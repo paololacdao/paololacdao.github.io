@@ -68,8 +68,8 @@
 			<div class="row">
 				<div class="col-sm-4">
 					<h4>Backlog</h4>
-					<div class="card-contents" dnd-list="cards">
-						<div ng-repeat="x in cards.backlog track by $index" class="card {{getBgColorClass(x.background)}}" card-directive dnd-draggable="x" dnd-moved="_testHandler($index, x.status)">
+					<div class="card-contents" dnd-list="cards.backlog">
+						<div ng-repeat="x in cards.backlog track by $index" class="card {{getBgColorClass(x.background)}}" card-directive dnd-draggable="x" dnd-dragstart="preDrag($index, 'backlog')" dnd-dragend="postDrag()">
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs edit-card"  data-toggle="collapse" data-target="#backlog-collapse-{{$index}}">Edit</button>
@@ -99,8 +99,8 @@
 				</div>
 				<div class="col-sm-4">
 					<h4>In Progress</h4>
-					<div class="card-contents" dnd-list="cards">
-						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards.inProgress track by $index" card-directive dnd-draggable="x" dnd-moved="_testHandler($index, x.status)"s>
+					<div class="card-contents" dnd-list="cards.inProgress">
+						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards.inProgress track by $index" card-directive dnd-draggable="x" dnd-dragstart="preDrag($index, 'inProgress')" dnd-canceled="postDrag()" dnd-moved="postDrag()">
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs edit-card" data-toggle="collapse" data-target="#in-progress-collapse-{{$index}}">Edit</button>
@@ -130,8 +130,8 @@
 				</div>
 				<div class="col-sm-4">
 					<h4>Done</h4>
-					<div class="card-contents">
-						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards.done track by $index" card-directive>
+					<div class="card-contents" dnd-list="cards.done">
+						<div class="card {{getBgColorClass(x.background)}}" ng-repeat="x in cards.done track by $index" card-directive dnd-dragstart="preDrag($index, 'done')" dnd-canceled="postDrag()" dnd-moved="postDrag()" dnd-draggable="x">
 							<label for="title" class="control-label">{{x.title}}</label>
 							<div class="controls pull-right">
 								<button class="btn btn-default btn-xs edit-card" data-toggle="collapse" data-target="#done-collapse-{{$index}}">Edit</button>
