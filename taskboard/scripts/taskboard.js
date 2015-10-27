@@ -20,11 +20,6 @@
 			this.background = "white";
 		}
 		
-		$scope.nonTrashStatus = "backlog, inProgress, done";
-		$scope.containsComparator = function(expected, actual){  
-		  return actual.indexOf(expected) > -1;
-		};
-		
 		$scope.getBgColorClass = function (color) {
 			switch (color) {
 				case 'blue' : 
@@ -85,19 +80,6 @@
 			$scope._updateLocalStorage();
 		};
 		
-		$scope.getRealIndex = function (index, type) {
-			var counter = -1;
-			
-			for (i=0; i < $scope.cards.length; i++) {
-				if ($scope.cards[i].status == type) {
-					counter++;
-				}
-				if (counter == index) {
-					return i;
-				}
-			}
-		};
-		
 		$scope.deleteAllCards = function () {
 			angular.forEach($scope.cards.backlog, function (item){
 				$scope.cards.trashed.push(item);
@@ -132,20 +114,9 @@
 			}
 		};
 		
-		$scope.preDrag = function (index, type) {
+		$scope.postDrag = function (index, type) {
 			$scope.cards[type].splice(index,1);
-		};
-		
-		$scope.postDrag = function () {
-			var localStorageCopy = JSON.parse(localStorage.cards),
-					localCopyTotal = localStorageCopy.backlog.length + localStorageCopy.inProgress.length + localStorageCopy.done.length,
-					scopeTotal = $scope.cards.backlog.length + $scope.cards.inProgress.length + $scope.cards.done.length;
-	
-			if (localCopyTotal != scopeTotal) {
-				$scope.cards = localStorageCopy;
-			} else {
-				$scope._updateLocalStorage();
-			}
+			$scope._updateLocalStorage();
 		};
 	});
 	

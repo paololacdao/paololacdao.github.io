@@ -44,3 +44,8 @@ div.container div.card-contents .edit-input {
 #trash {
 	padding-top: 5px;
 }
+
+.card-contents ul[dnd-list],
+.card-contents ul[dnd-list] > div.card {
+	position: relative;
+}
