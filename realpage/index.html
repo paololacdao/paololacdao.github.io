@@ -11,61 +11,64 @@
 		<link rel="stylesheet" type="text/css" href="styles/styles.css">
 		<script src="lib/jquery.js"></script>
 		<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+		<script src="js/scripts.js"></script>
 	</head>
 	<body>
 		<div class="container">
 			<nav class="navbar navbar-default">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="#">&nbsp;</a>
-					</div>
-					<ul class="nav navbar navbar-right">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Support<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Support</a></li>
-								<li><a href="#">Product FAQs</a></li>
-								<li><a href="#">Support Form</a></li>
-								<li><a href="#">Support Services</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
+				<a class="navbar-brand" href="#">&nbsp;</a>
+				<ul class="nav pull-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Support<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Support</a></li>
+							<li><a href="#">Product FAQs</a></li>
+							<li><a href="#">Support Form</a></li>
+							<li><a href="#">Support Services</a></li>
+						</ul>
+					</li>
+				</ul>
 			</nav>
 			<div class="jumbotron">
 				<div class="row">
-					<div class="col-xs-6">
-						<form action="#">
+					<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-1">
+						<form id="login-form" role="form">
 							<div class="form-group">
 								<h4>Sign On to OneSite</h4>
 							</div>
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="User Name">
+							<div class="form-group has-feedback">
+								<input id="username" type="text" class="form-control" placeholder="User Name" data-toggle="popover" data-trigger="manual" data-placement="bottom" data-content="Enter your User Name.">
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Password">
+								<input id="password" type="password" class="form-control" placeholder="Password" data-toggle="popover" data-trigger="manual" data-placement="bottom" data-content="Enter your Password.">
 							</div>
 							<div class="form-group">
-								<div id="forgotPasswordLink"><a href="#">Forgot your password?</a></div>
-								<button class="btn btn-default pull-right" type="submit">Submit</button>
+								<div id="forgot-password-link"><a href="#">Forgot your password?</a></div>
+								<button class="btn btn-default pull-right" id="signinbutton" type="submit">Submit</button>
 							</div>
 						</form>
 					</div>
-					<div class="col-xs-1 text-center vertical-center">
-						OR
+					<div class="col-sm-1 hidden-xs text-center vertical-center" id="vertical-separator">
+						<span class="text">OR</span>
 					</div>
-					<div class="col-xs-5">
+					<div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0">
 						<h4>Single Sign On</h4>
-						<button id="connectRP" class="btn btn-primary">Connect with RealPage ID</button>
+						<div>
+							<button id="connect-rp" class="btn btn-primary">Connect with RealPage ID</button>
+						</div>
 						<small>
-							Connect with RealPage ID and you
-							can sign on to all your RealPage
+							Connect with RealPage ID and you can sign on to all your RealPage
 							products at once. <a href="#">Find out more.</a>
 						</small>
 					</div>
 				</div>
 				<div id="pullout-row" class="row">
-					&nbsp;
+					<div id="pullout-content" class="pull-right hidden">
+						<h4>What City is This?</h4>
+						<small>It's the location for RealWorld 2015</small>
+						<button id="btn-reveal" class="btn btn-xs btn-default">Reveal Answer</button>
+					</div>
+					<span id="pullout-handle" class="pull-right glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 				</div>
 			</div>
 			<footer class="text-center">
