@@ -78,6 +78,12 @@ ul.dropdown-menu li {
 	background-repeat: no-repeat;
 }
 
+.alert-icon {
+	background: url('../images/alerticon.png');
+	height: 20px;
+	width: 20px;
+}
+
 #forgot-password-link {
 	display: inline-block;
 	margin-top: 7px;
@@ -101,11 +107,17 @@ ul.dropdown-menu li {
 #username.form-has-error {
 	border-color: #e84c34;
 	background-color: #fef9f8;
+	background-image: url('../images/alerticon.png');
+	background-position: right center;
+	background-repeat: no-repeat;
 }
 
 #password.form-has-error {
 	border-color: #e84c34;
 	background-color: #fef9f8;
+	background-image: url('../images/alerticon.png');
+	background-position: right center;
+	background-repeat: no-repeat;
 }
 
 .popover {
