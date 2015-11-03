@@ -78,12 +78,6 @@ ul.dropdown-menu li {
 	background-repeat: no-repeat;
 }
 
-.alert-icon {
-	background: url('../images/alerticon.png');
-	height: 20px;
-	width: 20px;
-}
-
 #forgot-password-link {
 	display: inline-block;
 	margin-top: 7px;
