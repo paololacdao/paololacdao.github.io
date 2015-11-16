@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="Build Board">
+		<meta name="author" content="Paolo Lacdao">
+		<title>Build Board</title>
+		<link rel="stylesheet" href="css/styles.css">
+	</head>
+	<body>
+		<div class="wrap">
+			<header>
+				<div class="record_id">Changelist</div>
+				<div class="record_owner">Owner</div>
+				<div class="record_timestarted">Time Started</div>
+				<div class="record_build">Build</div>
+				<div class="record_unittest">Unit Test</div>
+				<div class="record_functionaltest">Functional Test</div>
+				<div class="record_flag">Status</div>
+			</header>
+			<main id="build_records_container"></main>
+		</div>
+		
+		<script type="text/javascript" src="lib/underscore.js"></script>
+		<script type="text/javascript" src="lib/jquery.js"></script>
+		<script type="text/javascript" src="lib/backbone.js"></script>
+		
+		<script type="text/javascript" src="js/BB.js"></script>
+		<script type="text/javascript" src="js/model/Builds.js"></script>
+		<script type="text/javascript" src="js/view/BuildsView.js"></script>
+		<script type="text/javascript" src="js/start.js"></script>
+	</body>
+</html>

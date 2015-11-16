@@ -1,0 +1,110 @@
+<script type="text/template" id="build_record_template">
+	<div class="record_row <%= flag %>">
+		<div class="record_id"><%= id %></div>
+		<div class="record_owner"><%= owner %></div>
+		<div class="record_timestarted"><%= timeStarted %></div>
+		<div class="record_detailedstatus">
+			<div class="build_progress_bar <%= flag %>">
+				<span style="width: <%= buildPercentDone %>%">&nbsp;</span>
+			</div>
+			<div class="left_circle <%= buildFlag %> <%= flag %>"></div>
+			<div class="unittest_progress_bar <%= flag %>">
+				<span style="width: <%= unitTestPercentDone %>%">&nbsp;</span>
+			</div>
+			<div class="middle_circle <%= middleCircleFlag %> <%= flag %>"></div>
+			<div class="right_circle <%= rightCircleFlag %> <%= flag %>"></div>
+		</div>
+		<div class="record_flag <%= flag %>"><%= shortFlag %></div>
+	</div>
+	<div class="detailed_record_row hidden <%= flag %>">
+		<div class="detailed_record_row1 <%= flag %>">
+			<div class="record_id"><%= id %></div>
+			<div class="record_owner"><%= owner %></div>
+			<div class="record_timestarted"><%= timeStarted %></div>
+			<div class="record_detailedstatus">
+				<div class="build_progress_bar <%= flag %>">
+					<span style="width: <%= buildPercentDone %>%">&nbsp;</span>
+				</div>
+				<div class="left_circle <%= buildFlag %> <%= flag %>"></div>
+				<div class="unittest_progress_bar <%= flag %>">
+					<span style="width: <%= unitTestPercentDone %>%">&nbsp;</span>
+				</div>
+				<div class="middle_circle <%= middleCircleFlag %> <%= flag %>"></div>
+				<div class="right_circle <%= rightCircleFlag %> <%= flag %>"></div>
+			</div>
+		</div>
+		<div class="record_flag <%= flag %>">
+			<span class="buildtext">
+				<img src="images/<%= shortFlag %>-icon.png">
+				Build
+			</span>
+			<span class="shortflag"><%= shortFlag %></span>
+		</div>
+		<div class="detailed_record_row2">
+			<div class="build_details_header <%= buildFlag %>">
+				Build&nbsp;<img src="images/<%= shortFlag %>-icon.png">
+				<span class="buildtime">
+					<img src="images/clock-gray.png">&nbsp;<%= buildTime %>
+				</span>
+			</div>
+			<div class="build_details_download <%= buildFlag %>">
+				<a class="<%= buildDownload %>" href="#">debug</a>
+				<span class="<%= buildDownloadDisabled %>">debug</span>
+			</div>
+			<div class="build_details_release <%= buildFlag %>">
+				<a class="<%= buildRelease %>" href="#">release</a>
+				<span class="<%= buildReleaseDisabled %>">release</span>
+			</div>
+			<div class="vertical_separator <%= unitTestStatusDisabled %>"></div>
+			<div class="build_unittest_header <%= unitTestFlag %> <%= unitTestStatusDisabled %>">
+				<span class="build_unittest_text">
+					Unit Test&nbsp;<img src="images/<%= shortFlag %>-icon.png">
+				</span>
+				<span class="build_unittest_percent"><%= unitTestPercentSuccess %>%</span>
+				<span class="build_unittest_fail_reason <%= unitTestStatusReasonDisabled %>">
+					Status: 
+					<span><%= unitTestDetail %></span>
+				</span>
+			</div>
+			<div class="build_unittest_pie <%= unitTestStatusPieDisabled %>">
+				<div class="pie <%= unitTestStatusPieDisabled %>"><%= unitTestPercentSuccess %>%</div>
+			</div>
+			<div class="build_unittest_breakdown <%= unitTestStatusStatsDisabled %>">
+				<div class="build_unittest_breakdown_success">
+					<img src="images/box-passed.png">&nbsp;<%= unitTestPassedTests %>
+				</div>
+				<div class="build_unittest_breakdown_fail">
+					<img src="images/box-pending.png">&nbsp;<%= unitTestFailedTests %>
+				</div>
+				<div class="build_unittest_breakdown_executiontime">
+					<img src="images/clock-gray.png">&nbsp;<%= unitTestExecutionTime %>
+				</div>
+			</div>
+			<div class="vertical_separator <%= functionalTestStatusDisabled %>"></div>
+			<div class="build_functionaltest_header <%= functionalTestFlag %> <%= functionalTestStatusDisabled %>">
+				<span class="build_functionaltest_text">
+					Functional Test&nbsp;<img src="images/<%= shortFlag %>-icon.png">
+				</span>
+				<span class="build_functionaltest_percent"><%= functionalTestPercentSuccess %>%</span>
+				<span class="build_functionaltest_fail_reason <%= functionalTestStatusReasonDisabled %>">
+					Status: 
+					<span><%= functionalTestDetail %></span>
+				</span>
+			</div>
+			<div class="build_functionaltest_pie <%= functionalTestStatusPieDisabled %>">
+				<div class="pie <%= unitTestStatusPieDisabled %>"><%= functionalTestPercentSuccess %>%</div>
+			</div>
+			<div class="build_functionaltest_breakdown <%= functionalTestStatusStatsDisabled %>">
+				<div class="build_functionaltest_breakdown_success">
+					<img src="images/box-passed.png">&nbsp;<%= functionalTestPassedTests %>
+				</div>
+				<div class="build_functionaltest_breakdown_fail">
+					<img src="images/box-pending.png">&nbsp;<%= functionalTestFailedTests %>
+				</div>
+				<div class="build_functionaltest_breakdown_executiontime">
+					<img src="images/clock-gray.png">&nbsp;<%= functionalTestExecutionTime %>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
