@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>JS Unit Test Runner</title>
+	
+	<link rel="stylesheet" href="lib/qunit/qunit.css">	
+</head>
+<body>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+	
+	<script type="text/javascript">
+		function blanket_toggleSource(e) {
+			var t = document.getElementById(e);
+			t.style.display === "block" ? t.style.display = "none" : t.style.display = "block";
+		}
+	</script>
+
+	<script type="text/javascript" src="lib/underscore.js"></script>
+	<script type="text/javascript" src="lib/jquery.js"></script>
+	<script type="text/javascript" src="lib/backbone.js"></script>
+
+	<script type="text/javascript" src="lib/qunit/qunit.js"></script>
+	<script type="text/javascript" src="lib/sinon-1.10.2.js"></script>
+    <script type="text/javascript" src="lib/sinon-ie-1.10.2.js"></script>
+    <script type="text/javascript" src="lib/sinon-qunit-1.0.0.js"></script>
+	<script type="text/javascript" src="lib/blanket.min.js" ></script>
+		
+	<script type="text/javascript" src="js/BB.js"></script>
+	<script type="text/javascript" src="js/model/Builds.js"></script>
+	<script type="text/javascript" src="js/view/BuildsView.js"></script>
+		
+	<script type="text/javascript" src="unittests/NamespaceTest.js"></script>
+	<script type="text/javascript" src="unittests/ModelTest.js"></script>
+	<script type="text/javascript" src="unittests/ViewTest.js"></script>
+</body>
+</html>
