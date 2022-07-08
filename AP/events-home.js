@@ -32,7 +32,7 @@ document.getElementById('btn-event-productClick').addEventListener('click', func
 });
 
 // Event handler: Click on "Add to Cart" button
-document.getElementById('cta').addEventListener('click', function(){
+document.getElementById('btn-event-addToCart').addEventListener('click', function(){
     dataLayer.push({ ecommerce: null });  // Clear the previous ecommerce object.
     dataLayer.push({
         event: "add_to_cart",
