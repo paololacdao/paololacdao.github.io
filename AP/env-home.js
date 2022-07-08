@@ -2,12 +2,12 @@ var dataLayer = dataLayer || [];
 
 // Environment variables
 dataLayer.push({
-    'brand': 'paololacdao.com',
-    'country': 'sg',
+    'brand': 'paololacdao',
+    'country': 'au',
     'lang': 'en',
     'pageCategory': 'homepage',
     'pageTitle': 'Home',
     'siteType': 'main',
-    'websiteVersion': '1.1'
+    'websiteVersion': '1.2'
 });
 
